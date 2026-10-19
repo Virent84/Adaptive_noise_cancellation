@@ -1,0 +1,42 @@
+# ============================================================
+# Phase 1 Step 13 — Authoritative Training Configuration
+# Single-source of truth for all training defaults.
+# ============================================================
+
+# --- Core Training Parameters ---
+batch_size: 16
+epochs: 30
+learning_rate: 0.001
+weight_decay: 0.0001
+gradient_clip_norm: 5.0
+seed: 123
+num_workers: 0
+validation_frequency: 1
+log_frequency: 10
+mixed_precision: false
+
+# --- Optimizer ---
+optimizer: AdamW
+
+# --- Scheduler ---
+scheduler:
+  type: ReduceLROnPlateau
+  mode: min
+  factor: 0.5
+  patience: 3
+  min_lr: 1.0e-6
+
+# --- Loss Weights ---
+loss:
+  enhancement_weight: 1.0
+  classification_weight: 0.10
+  enhancement_l1_weight: 0.7
+  enhancement_l2_weight: 0.3
+
+# --- Checkpoint ---
+checkpoint:
+  checkpoint_dir: models/checkpoints
+  save_best_only: true
+  monitor: val_total_loss
+  mode: min
+  save_last: true
